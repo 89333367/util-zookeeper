@@ -1,22 +1,4 @@
-# util-zookeeper
-
-Zookeeper操作工具类
-
-# pom.xml依赖
-
-```xml
-
-<dependency>
-    <groupId>sunyu.util</groupId>
-    <artifactId>util-zookeeper</artifactId>
-    <!-- {zookeeper.version}_{util.version}_{jdk.version}_{architecture.version} -->
-    <version>3.9.3_1.0_jdk8_x64</version>
-</dependency>
-```
-
-
-# 使用示例
-```java
+package sunyu.util.test;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -104,5 +86,3 @@ public class ZookeeperUtilTests {
         zookeeperUtil.close();
     }
 }
-
-```
