@@ -74,8 +74,8 @@
                     <!-- 重命名包名解决冲突 -->
                     <relocations>
                         <relocation>
-                            <pattern>org.apache.kafka</pattern>
-                            <shadedPattern>relocation.org.apache.kafka</shadedPattern>
+                            <pattern>org.apache.zookeeper</pattern>
+                            <shadedPattern>relocation.org.apache.zookeeper</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
