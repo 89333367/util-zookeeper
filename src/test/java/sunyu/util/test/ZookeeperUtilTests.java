@@ -1,11 +1,12 @@
 package sunyu.util.test;
 
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import org.junit.jupiter.api.Test;
 import sunyu.util.ZookeeperUtil;
-
-import java.util.List;
 
 public class ZookeeperUtilTests {
     Log log = LogFactory.get();
@@ -39,7 +40,8 @@ public class ZookeeperUtilTests {
             List<String> partitions = zookeeperUtil.listDirectory("/consumers/" + groupId + "/offsets/" + topic);
             log.info("{}", partitions);
             for (String partition : partitions) {
-                String nodeData = zookeeperUtil.getNodeData("/consumers/" + groupId + "/offsets/" + topic + "/" + partition);
+                String nodeData = zookeeperUtil
+                        .getNodeData("/consumers/" + groupId + "/offsets/" + topic + "/" + partition);
                 log.info("partition:{} offsets:{}", partition, nodeData);
             }
         }
@@ -76,7 +78,8 @@ public class ZookeeperUtilTests {
                 List<String> partitions = zookeeperUtil.listDirectory("/consumers/" + groupId + "/offsets/" + topic);
                 //log.info("{}", partitions);
                 for (String partition : partitions) {
-                    String nodeData = zookeeperUtil.getNodeData("/consumers/" + groupId + "/offsets/" + topic + "/" + partition);
+                    String nodeData = zookeeperUtil
+                            .getNodeData("/consumers/" + groupId + "/offsets/" + topic + "/" + partition);
                     log.info("tpic:{} partition:{} offsets:{}", topic, partition, nodeData);
                 }
             }

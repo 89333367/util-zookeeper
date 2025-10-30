@@ -10,7 +10,7 @@ Zookeeper操作工具类
     <groupId>sunyu.util</groupId>
     <artifactId>util-zookeeper</artifactId>
     <!-- {zookeeper.version}_{util.version}_{jdk.version}_{architecture.version} -->
-    <version>3.9.3_1.0_jdk8_x64</version>
+    <version>3.9.4_1.0_jdk8_x64</version>
     <classifier>shaded</classifier>
 </dependency>
 ```

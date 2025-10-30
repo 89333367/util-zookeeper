@@ -1,17 +1,18 @@
 package sunyu.util;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 
 /**
  * Zookeeper工具类
@@ -27,7 +28,7 @@ public class ZookeeperUtil implements AutoCloseable {
     }
 
     private ZookeeperUtil(Config config) {
-        log.info("[构建Zookeeper工具类] 开始");
+        log.info("[构建{}] 开始", this.getClass().getSimpleName());
         if (StrUtil.isBlank(config.connectString)) {
             throw new RuntimeException("Zookeeper连接字符串不能为空");
         }
@@ -42,7 +43,7 @@ public class ZookeeperUtil implements AutoCloseable {
             throw new RuntimeException(e);
         }
         this.config = config;
-        log.info("[构建Zookeeper工具类] 结束");
+        log.info("[构建{}] 结束", this.getClass().getSimpleName());
     }
 
     private static class Config {
@@ -86,7 +87,7 @@ public class ZookeeperUtil implements AutoCloseable {
      */
     @Override
     public void close() {
-        log.info("[Zookeeper工具关闭] 开始");
+        log.info("[销毁{}] 开始", this.getClass().getSimpleName());
         if (config.zooKeeper != null) {
             try {
                 config.zooKeeper.close();
@@ -94,9 +95,8 @@ public class ZookeeperUtil implements AutoCloseable {
                 log.error("[Zookeeper工具关闭] 失败", ExceptionUtil.stacktraceToString(e));
             }
         }
-        log.info("[Zookeeper工具关闭] 结束");
+        log.info("[销毁{}] 结束", this.getClass().getSimpleName());
     }
-
 
     /**
      * 遍历目录
