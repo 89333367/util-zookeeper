@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sunyu.util</groupId>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.41</version>
+            <version>5.8.42</version>
         </dependency>
         <!-- https://central.sonatype.com/artifact/org.apache.zookeeper/zookeeper/versions -->
         <dependency>
@@ -49,16 +49,16 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.14.0</version>
+            <version>5.14.1</version>
             <scope>test</scope>
         </dependency>
         <!-- https://central.sonatype.com/artifact/log4j/log4j/versions -->
-        <dependency>
+        <!--<dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
@@ -76,14 +76,52 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <!-- 添加以下配置来禁用 dependency-reduced-pom.xml 文件生成 -->
+                            <!-- 禁用 dependency-reduced-pom.xml 文件生成 -->
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
-                                <!--<relocation>
-                                    <pattern>com.fasterxml.jackson</pattern>
-                                    <shadedPattern>shaded.com.fasterxml.jackson</shadedPattern>
-                                </relocation>-->
+                                <!-- 重命名Hutool包 -->
+                                <relocation>
+                                    <pattern>cn.hutool</pattern>
+                                    <shadedPattern>sunyu.util.relocations.zookeeper.cn.hutool</shadedPattern>
+                                </relocation>
+                                <!-- 重命名Netty包 -->
+                                <relocation>
+                                    <pattern>io.netty</pattern>
+                                    <shadedPattern>sunyu.util.relocations.zookeeper.io.netty</shadedPattern>
+                                </relocation>
+                                <!-- 重命名Reactor -->
+                                <relocation>
+                                    <pattern>reactor</pattern>
+                                    <shadedPattern>sunyu.util.relocations.zookeeper.reactor</shadedPattern>
+                                </relocation>
+                                <!-- 重命名Netty的native库 -->
+                                <relocation>
+                                    <pattern>META-INF/native/libnetty</pattern>
+                                    <shadedPattern>META-INF/native/sunyu_util_relocations_zookeeper_libnetty
+                                    </shadedPattern>
+                                </relocation>
+                                <!-- 重命名Netty的native镜像 -->
+                                <relocation>
+                                    <pattern>META-INF/native/netty</pattern>
+                                    <shadedPattern>META-INF/native/sunyu_util_relocations_zookeeper_netty
+                                    </shadedPattern>
+                                </relocation>
                             </relocations>
+                            <transformers>
+                                <!-- 合并META-INF/services文件 -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <!-- 处理Apache许可证 -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                                <!-- 处理Netty的native库 -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Multi-Release>true</Multi-Release>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>shaded</shadedClassifierName>
                             <filters>
@@ -94,7 +132,9 @@
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
-                                        <!-- 可选：保留其他静态资源，必要时再按需排除 -->
+                                        <!-- 排除重复的NOTICE文件 -->
+                                        <exclude>META-INF/NOTICE*</exclude>
+                                        <exclude>META-INF/LICENSE*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -109,7 +149,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>
