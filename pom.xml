@@ -94,18 +94,6 @@
                                     <pattern>reactor</pattern>
                                     <shadedPattern>sunyu.util.relocations.zookeeper.reactor</shadedPattern>
                                 </relocation>
-                                <!-- 重命名Netty的native库 -->
-                                <relocation>
-                                    <pattern>META-INF/native/libnetty</pattern>
-                                    <shadedPattern>META-INF/native/sunyu_util_relocations_zookeeper_libnetty
-                                    </shadedPattern>
-                                </relocation>
-                                <!-- 重命名Netty的native镜像 -->
-                                <relocation>
-                                    <pattern>META-INF/native/netty</pattern>
-                                    <shadedPattern>META-INF/native/sunyu_util_relocations_zookeeper_netty
-                                    </shadedPattern>
-                                </relocation>
                             </relocations>
                             <transformers>
                                 <!-- 合并META-INF/services文件 -->
